@@ -1,7 +1,7 @@
 #include<iostream>
-#include "struct.h"
+// #include "struct.h"
 #include "update.h"
-#include "query.h"
+
 
 Node* insert(Node* root,Node* z)
 {
@@ -12,7 +12,7 @@ Node* insert(Node* root,Node* z)
 	{
 		x->height++;
 		parent = x;
-		if(x->val<z->val)
+		if(getKey(x)<getKey(z))
 			x = x->right;
 		else
 			x = x->left;
@@ -22,7 +22,7 @@ Node* insert(Node* root,Node* z)
 		root = z;
 	else
 	{
-		if(parent->val<z->val)
+		if(getKey(parent)<getKey(z))
 			parent->right = z;
 		else
 			parent->left = z;
@@ -62,8 +62,10 @@ Node* del(Node* root,Node* z)
 	}
 	else
 	{
-		Node* y = Minimum(root,z->right);
-		z->val = y->val;
+		Node* y = Minimum(z->right);
+		int args[] = {y->start,y->end};
+		setKey(z,args);
+		// z->val = y->val;
 		Node* p = y->parent;
 		p->left = y->right; 
 	}

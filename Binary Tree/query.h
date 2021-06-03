@@ -1,7 +1,6 @@
 #include<iostream>
-#include "struct.h"
+#include "custom.h"
 
-Node* createNode(int val);
 Node* Search(Node* root, int val);
-int Minimum(Node* root);
-int Maximum(Node* root);
+Node* Minimum(Node* root);
+Node* Maximum(Node* root);

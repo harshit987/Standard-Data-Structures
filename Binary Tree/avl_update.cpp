@@ -1,7 +1,6 @@
 #include<iostream>
-#include "struct.h"
-#include "query.h"
-#include "update.h"
+// #include "struct.h"
+#include "avl_update.h"
 
 Node* left_rotate(Node** root,Node* x)
 {
@@ -31,7 +30,8 @@ Node* left_rotate(Node** root,Node* x)
 	
 	x->height = max((x->left)->height,(x->right)->height)+1;
 	y->height = max((y->left)->height,(y->right)->height)+1;
-
+	augmentationUpdate(x);
+	augmentationUpdate(y);
 	return y;
 }
 Node* right_rotate(Node** root, Node* x)
@@ -61,7 +61,8 @@ Node* right_rotate(Node** root, Node* x)
 
 	x->height = max((x->left)->height,(x->right)->height)+1;
 	y->height = max((y->left)->height,(y->right)->height)+1;
-	
+	augmentationUpdate(x);
+	augmentationUpdate(y);
 	return y;
 }
 int getHeight(Node* root)
@@ -70,20 +71,20 @@ int getHeight(Node* root)
 		return 0;
 	else return root->height;
 }
-Node* avl_insert(Node* root,int x)
+Node* avl_insert(Node* root,Node* x)
 {
-	Node* z = createNode(x);
-	root = insert(root,z);
-	z = z->parent;
+	root = insert(root,x);
+	Node* z = x->parent;
 
 	while(z!=NULL)
 	{
 		z->height = max(getHeight(z->left),getHeight(z->right));
+		augmentationUpdate(z);
 		int inbal = 0;
 		inbal = getHeight(z->left)-getHeight(z->right);
 		if(inbal>1)
 		{
-			if(x<(z->left)->val)
+			if(getKey(x)<getKey(z->left))
 				z = right_rotate(&root,z);
 			else
 			{
@@ -94,7 +95,7 @@ Node* avl_insert(Node* root,int x)
 		}
 		else if(inbal<-1)
 		{
-			if(x>(z->right)->val)
+			if(getKey(x)>getKey(z->right))
 				z = left_rotate(&root,z);
 			else
 			{
@@ -143,8 +144,10 @@ Node* avl_delete(Node* root, Node* z)
 	}
 	else
 	{
-		Node* y = Minimum(root,z->right);
-		z->val = y->val;
+		Node* y = Minimum(z->right);
+		int args[] = {y->start,y->end};
+		setKey(z,args);
+		// z->val = y->val;
 		Node* p = y->parent;
 		p->left = y->right;
 		parent = p; 
@@ -152,6 +155,7 @@ Node* avl_delete(Node* root, Node* z)
 	while(parent!=NULL)
 	{
 		parent->height = max(getHeight(parent->left),getHeight(parent->right))+1;
+		augmentationUpdate(parent);
 		int inbal = getHeight(parent->left)-getHeight(parent->right);
 		if(inbal>1)
 		{
@@ -180,3 +184,4 @@ Node* avl_delete(Node* root, Node* z)
 	}
 	return root;
 }
+
