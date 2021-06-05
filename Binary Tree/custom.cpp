@@ -29,7 +29,7 @@
 
 #include "custom.h"
 
-Node* createNode(int n_par,int args[])
+Node* createNode(int n_par,float args[])
 {
 	Node* z = (Node*) malloc(sizeof(Node));
 	z->left = z->right = z->parent = NULL;
@@ -42,12 +42,12 @@ Node* createNode(int n_par,int args[])
 	return z;
 }
 
-int getKey(Node* root)
+float getKey(Node* root)
 {
 	// return the required key for BST
 	return root->start;
 }
-void setKey(Node* root,int args[])
+void setKey(Node* root,float args[])
 {
 	root->start = args[0];
 	root->end = args[1];
@@ -58,12 +58,18 @@ void augmentationUpdate(Node* root)
 	// Add code required to  update augmented node data structure using its children node.
 	if(root==NULL)
 		return;
-	int mx = INT8_MIN;
-	if(root->left!=NULL)
+	float mx = -100000000;
+	if(root->left!=NULL){
 		mx = max(mx,(root->left)->max);
-	if(root->right!=NULL)
+		// cout <<(root->left)->max<<endl;
+	}
+	if(root->right!=NULL){
 		mx = max(mx,(root->right)->max);
+		// cout << (root->right)->max<<endl;
+	}
 	root->max = max(mx,root->end);
+	// cout << root->start << " "<<root->end<<" "<<root->max<<endl;
+	// cout << mx<<endl;
 }
 
 

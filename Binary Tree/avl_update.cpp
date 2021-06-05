@@ -26,10 +26,11 @@ Node* left_rotate(Node** root,Node* x)
 
 	x->parent = y;
 	y->parent = parent;
+	if(z!=NULL)
 	z->parent = x;
-	
-	x->height = max((x->left)->height,(x->right)->height)+1;
-	y->height = max((y->left)->height,(y->right)->height)+1;
+
+	x->height = max(getHeight(x->left),getHeight(x->right))+1;
+	y->height = max(getHeight(y->left),getHeight(y->right))+1;
 	augmentationUpdate(x);
 	augmentationUpdate(y);
 	return y;
@@ -54,13 +55,13 @@ Node* right_rotate(Node** root, Node* x)
 		else
 			parent->right = y;
 	}
-
 	x->parent = y;
 	y->parent = parent;
+	if(z!=NULL)
 	z->parent = x;
 
-	x->height = max((x->left)->height,(x->right)->height)+1;
-	y->height = max((y->left)->height,(y->right)->height)+1;
+	x->height = max(getHeight(x->left),getHeight(x->right))+1;
+	y->height = max(getHeight(y->left),getHeight(y->right))+1;
 	augmentationUpdate(x);
 	augmentationUpdate(y);
 	return y;
@@ -68,23 +69,23 @@ Node* right_rotate(Node** root, Node* x)
 int getHeight(Node* root)
 {
 	if(root==NULL)
-		return 0;
+		return -1;
 	else return root->height;
 }
 Node* avl_insert(Node* root,Node* x)
 {
 	root = insert(root,x);
 	Node* z = x->parent;
-
+	// cout << z->start<<endl;
 	while(z!=NULL)
 	{
-		z->height = max(getHeight(z->left),getHeight(z->right));
+		z->height = max(getHeight(z->left),getHeight(z->right))+1;
 		augmentationUpdate(z);
 		int inbal = 0;
 		inbal = getHeight(z->left)-getHeight(z->right);
 		if(inbal>1)
 		{
-			if(getKey(x)<getKey(z->left))
+			if(getKey(x)<=getKey(z->left))
 				z = right_rotate(&root,z);
 			else
 			{
@@ -145,7 +146,7 @@ Node* avl_delete(Node* root, Node* z)
 	else
 	{
 		Node* y = Minimum(z->right);
-		int args[] = {y->start,y->end};
+		float args[] = {y->start,y->end};
 		setKey(z,args);
 		// z->val = y->val;
 		Node* p = y->parent;

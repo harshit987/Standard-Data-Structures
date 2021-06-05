@@ -63,7 +63,7 @@ Node* del(Node* root,Node* z)
 	else
 	{
 		Node* y = Minimum(z->right);
-		int args[] = {y->start,y->end};
+		float args[] = {y->start,y->end};
 		setKey(z,args);
 		// z->val = y->val;
 		Node* p = y->parent;

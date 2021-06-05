@@ -29,13 +29,13 @@ struct node {
 	int height;
 	// Add other requried node elements
 
-	int start,end,max;
+	float start,end,max;
 
 
 };
 typedef struct node Node;
 
-Node* createNode(int n_par,int args[]);
-int getKey(Node* root);
-void setKey(Node* root, int args[]);
+Node* createNode(int n_par,float args[]);
+float getKey(Node* root);
+void setKey(Node* root, float args[]);
 void augmentationUpdate(Node* root);
