@@ -16,4 +16,4 @@ To help you understand better about how and what these functions do, i have prov
 **<u>How to use the library in your cpp files</u>**
 
 Finally after modifying <b>custom.cpp</b>, include <b>avl_update.h</b> in your cpp file say <b>main.cpp</b> where you want to use your custom-defined BST and type <b>make arg1=main.cpp</b>. This will create executable <b>a.out</b> to run your <b>main.cpp</b> program.
-// testing git on new M1 MBP.
+
